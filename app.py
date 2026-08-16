@@ -7,15 +7,15 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.title("🏥 Sistem Prediksi Jumlah Pasien Rawat Inap")
+st.title("Prediksi Jumlah Pasien Rawat Inap")
 
 st.markdown("""
 Selamat datang pada aplikasi prediksi jumlah pasien rawat inap
 menggunakan tiga model machine learning:
 
-- 🔮 Prophet
-- 🌲 XGBoost
-- 🧠 Gated Recurrent Unit (GRU)
+- Prophet
+- XGBoost
+- Gated Recurrent Unit (GRU)
 
 ### Cara menggunakan aplikasi
 
