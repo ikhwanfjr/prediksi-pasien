@@ -1,0 +1,12 @@
+streamlit
+tensorflow
+prophet
+xgboost
+pandas
+numpy
+scikit-learn
+joblib
+holidays
+plotly
+matplotlib
+holidays
