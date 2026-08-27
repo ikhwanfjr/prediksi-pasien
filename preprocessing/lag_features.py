@@ -1,25 +1,75 @@
 import pandas as pd
 
-
-def create_lag_features(
+def remove_outliers(
     df,
-    target_col="jumlah_pasien",
-    lags=(1, 7, 14, 21, 30),
-    dropna=True
+    target_col="jumlah_pasien"
 ):
     """
-    Membuat fitur lag berdasarkan kolom target.
+    Mendeteksi dan menghapus outlier menggunakan
+    metode Interquartile Range (IQR).
 
     Parameters
     ----------
     df : pd.DataFrame
         Data historis.
+
+    target_col : str
+        Nama kolom target yang digunakan
+        untuk mendeteksi outlier.
+
+    Returns
+    -------
+    pd.DataFrame
+        Data setelah outlier dihapus.
+    """
+
+    df = df.copy()
+
+    Q1 = df[target_col].quantile(0.25)
+    Q3 = df[target_col].quantile(0.75)
+
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - (1.5 * IQR)
+    upper_bound = Q3 + (1.5 * IQR)
+
+    df = df[
+        (df[target_col] >= lower_bound)
+        &
+        (df[target_col] <= upper_bound)
+    ].copy()
+
+    return df.reset_index(drop=True)
+
+def create_lag_features(
+    df,
+    target_col="jumlah_pasien",
+    lags=(1, 7, 14, 21, 30),
+    dropna=True,
+    remove_outlier=True
+):
+    """
+    Membuat fitur lag berdasarkan kolom target
+    dan menghapus outlier menggunakan metode IQR.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Data historis.
+
     target_col : str
         Nama kolom target.
+
     lags : tuple
         Daftar nilai lag.
+
     dropna : bool
-        Menghapus baris yang memiliki nilai NaN akibat proses shifting.
+        Menghapus baris yang memiliki nilai NaN
+        akibat proses shifting.
+
+    remove_outlier : bool
+        Menghapus outlier setelah pembuatan
+        fitur lag.
 
     Returns
     -------
@@ -28,11 +78,34 @@ def create_lag_features(
 
     df = df.copy()
 
+    # =====================================================
+    # MEMBUAT FITUR LAG
+    # =====================================================
+
     for lag in lags:
-        df[f"lag_{lag}"] = df[target_col].shift(lag)
+
+        df[f"lag_{lag}"] = (
+            df[target_col].shift(lag)
+        )
+
+    # =====================================================
+    # MENGHAPUS NILAI NaN
+    # =====================================================
 
     if dropna:
+
         df = df.dropna().reset_index(drop=True)
+
+    # =====================================================
+    # MENGHAPUS OUTLIER
+    # =====================================================
+
+    if remove_outlier:
+
+        df = remove_outliers(
+            df,
+            target_col=target_col
+        )
 
     return df
 
