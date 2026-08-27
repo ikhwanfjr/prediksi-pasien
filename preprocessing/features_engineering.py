@@ -198,47 +198,12 @@ def add_national_holiday(
 
 
 # ==========================================================
-# REMOVE OUTLIERS
-# ==========================================================
-
-def remove_outliers(
-    df,
-    column="jumlah_pasien"
-):
-    """
-    Menghapus outlier menggunakan metode IQR.
-
-    Batas outlier dihitung berdasarkan data
-    yang diberikan pada saat fungsi dijalankan.
-    """
-
-    df = df.copy()
-
-    Q1 = df[column].quantile(0.25)
-    Q3 = df[column].quantile(0.75)
-
-    IQR = Q3 - Q1
-
-    lower_bound = Q1 - 1.5 * IQR
-    upper_bound = Q3 + 1.5 * IQR
-
-    df = df[
-        (df[column] >= lower_bound)
-        &
-        (df[column] <= upper_bound)
-    ].copy()
-
-    return df
-
-
-# ==========================================================
 # FEATURE ENGINEERING PIPELINE
 # ==========================================================
 
 def feature_engineering(df):
     """
     Menjalankan seluruh proses feature engineering
-    dan menghapus outlier menggunakan metode IQR.
     """
 
     df = df.copy()
@@ -284,17 +249,6 @@ def feature_engineering(df):
         df,
         holiday_df
     )
-
-    # ------------------------------------------------------
-    # Hapus outlier
-    # ------------------------------------------------------
-
-    if "jumlah_pasien" in df.columns:
-
-        df = remove_outliers(
-            df,
-            column="jumlah_pasien"
-        )
 
     return df.reset_index(
         drop=True
