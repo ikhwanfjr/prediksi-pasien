@@ -15,7 +15,7 @@ def aggregate_daily(
 
     # Hapus duplikat
     df = df.drop_duplicates(
-        subset=["no_registrasi"]
+        subset=["no_register"]
     ).reset_index(drop=True)
 
     # Konversi tanggal
