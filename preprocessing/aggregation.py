@@ -14,7 +14,9 @@ def aggregate_daily(
     df = df.copy()
 
     # Hapus duplikat
-    df = df.drop_duplicates().reset_index(drop=True)
+    df = df.drop_duplicates(
+        subset=["no_registrasi"]
+    ).reset_index(drop=True)
 
     # Konversi tanggal
     df[admission_col] = pd.to_datetime(
