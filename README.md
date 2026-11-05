@@ -156,12 +156,8 @@ Pastikan seluruh dependensi telah terpasang, kemudian jalankan perintah:
 streamlit run app.py
 ```
 
-Aplikasi akan berjalan secara lokal dan dapat diakses melalui browser.
+Aplikasi akan berjalan secara lokal dan dapat diakses melalui browser. Atau Akses Link Berikut
 
----
-
-## Catatan
-
-Proyek ini dikembangkan untuk keperluan penelitian akademik dan sebagai prototipe sistem prediksi jumlah pasien rawat inap. Hasil prediksi ditujukan sebagai informasi pendukung dalam perencanaan kebutuhan bahan makanan di Instalasi Gizi RSUD Pringsewu, bukan sebagai pengganti keputusan operasional rumah sakit.
-
-Dataset yang mengandung informasi pribadi pasien tidak boleh disebarluaskan secara publik tanpa izin dan prosedur perlindungan data yang sesuai.
+```bash
+https://prediksi-pasien.streamlit.app/dashboard
+```
